@@ -1,68 +1,49 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
-// let menuicn = document.querySelector(".menuicn");
-// let nav = document.querySelector(".navcontainer");
-
-// menuicn.addEventListener("click", () => {
-//   nav.classList.toggle("navclose");
-// })
-
-
 function App() {
+  // State to track the active tab
+  const [activeTab, setActiveTab] = useState('SALE');
 
+  // Menu toggle functionality
   useEffect(() => {
-    const menuicn = document.querySelector(".menuicn");
-    const nav = document.querySelector(".navcontainer");
+    const menuicn = document.querySelector('.menuicn');
+    const nav = document.querySelector('.navcontainer');
 
     if (menuicn && nav) {
       const handleClick = () => {
-        nav.classList.toggle("navclose");
+        nav.classList.toggle('navclose');
       };
-      menuicn.addEventListener("click", handleClick);
+      menuicn.addEventListener('click', handleClick);
 
       return () => {
-        menuicn.removeEventListener("click", handleClick);
+        menuicn.removeEventListener('click', handleClick);
       };
     }
   }, []);
 
+  // Define iframe sources for each tab
+  const iframeSources = {
+    SALE: {
+      src: 'https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f',
+      title: 'DoanhThuDashboard',
+    },
+    INVENTORY: {
+      src: 'https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f',
+      title: 'TonKhoDashboard',
+    },
+    Report: {
+      src: '', // Replace with actual Report iframe URL
+      title: 'ReportDashboard',
+    },
+  };
+
+  // Handle tab click
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+  };
 
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     {/* <h1>Power BI Secure Embed Dashboard</h1> */}
-    //     <div style={{ width: '1140px', height: '541.25px', border: '1px solid #ccc' }}>
-    //       {/* <iframe
-    //         title="DashboardHTTTQL"
-    //         width="1140"
-    //         height="541.25"
-    //         src="https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f&actionBarEnabled=true"
-    //         frameBorder="0"
-    //         allowFullScreen="true"
-    //       ></iframe> */}
-    //       {/* <iframe title="DashboardHTTTQL" 
-    //         width="1140" 
-    //         height="541.25" 
-    //         src="https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f" 
-    //         frameborder="0" 
-    //         allowFullScreen="true">
-    //       </iframe> */}
-
-    //       <iframe
-    //         title="DashboardHTTTQL"
-    //         width="1140"
-    //         height="675"
-    //          src="https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f"
-    //         allowFullScreen="true">
-    //       </iframe>
-    //       {/* <iframe title="DashboardHTTTQL" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f" frameborder="0" allowFullScreen="true"></iframe> */}
-    //       {/* <iframe title="DashboardHTTTQL" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f" frameborder="0" allowFullScreen="true"></iframe> */}
-    //       {/* <iframe title="DashboardHTTTQL" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f" frameborder="0" allowFullScreen="true"></iframe> */}
-    //     </div>
-    //   </header>
-    // </div>
-
     <>
       <title>Dashboard</title>
       <link rel="stylesheet" href="App.css" />
@@ -107,23 +88,32 @@ function App() {
         <div className="navcontainer">
           <nav className="nav">
             <div className="nav-upper-options">
-              <div className="nav-option option1">
+              <div
+                className={`nav-option option1 ${activeTab === 'SALE' ? 'active' : ''}`}
+                onClick={() => handleTabClick('SALE')}
+              >
                 <img
                   src="https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
                   className="nav-img"
                   alt="dashboard"
                 />
-                <h3>Dashboard</h3>
+                <h3>Sale</h3>
               </div>
-              <div className="option2 nav-option">
+              <div
+                className={`nav-option option2 ${activeTab === 'INVENTORY' ? 'active' : ''}`}
+                onClick={() => handleTabClick('INVENTORY')}
+              >
                 <img
                   src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
                   className="nav-img"
                   alt="articles"
                 />
-                <h3>Articles</h3>
+                <h3>Inventory</h3>
               </div>
-              <div className="nav-option option3">
+              <div
+                className={`nav-option option3 ${activeTab === 'Report' ? 'active' : ''}`}
+                onClick={() => handleTabClick('Report')}
+              >
                 <img
                   src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/5.png"
                   className="nav-img"
@@ -131,7 +121,6 @@ function App() {
                 />
                 <h3>Report</h3>
               </div>
-
               <div className="nav-option logout">
                 <img
                   src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
@@ -144,17 +133,21 @@ function App() {
           </nav>
         </div>
         <div className="main">
-          <iframe title="DashboardHTTTQL"
+          {iframeSources[activeTab] ? (
+            <iframe
+              title={iframeSources[activeTab].title}
               width="100%"
               height="100%"
-              src="https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f"
-              frameborder="0"
-              allowFullScreen="true">
-            </iframe>
+              src={iframeSources[activeTab].src}
+              frameBorder="0"
+              allowFullScreen="true"
+            ></iframe>
+          ) : (
+            <p>No content available for this tab.</p>
+          )}
         </div>
       </div>
     </>
-
   );
 }
 
