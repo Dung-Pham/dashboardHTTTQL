@@ -1,0 +1,265 @@
+.report-builder {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 300px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+  position: relative;
+}
+
+.dashboard-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.dashboard-item:hover {
+  transform: translateY(-2px);
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  padding-top: 0;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.controls {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #e6f3ff;
+  display: flex;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.report-canvas {
+  min-height: 100%;
+  /* padding: 25mm 20mm 20mm 25mm; Căn lề: trên 2.5cm, phải 2cm, dưới 2cm, trái 2.5cm */
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  width: 210mm; /* Kích thước A4 */
+  margin: 0 auto;
+}
+
+.report-item {
+  padding: 10px 0;
+  background-color: white;
+  position: relative;
+  font-size: 14px; /* Kích thước chữ mặc định cho nội dung */
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.report-item:hover {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.report-item .action-buttons {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+}
+
+.report-item:hover .action-buttons {
+  display: flex;
+  gap: 10px;
+  /* border: 1px solid #ddd; */
+}
+
+.action{
+  border: 2px solid #3498db;
+}
+
+.text-content.title h1 {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+  line-height: 1.5;
+}
+
+.text-content.subtitle1 h2 {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  margin: 15px 0;
+  line-height: 1.5;
+}
+
+.text-content.subtitle2 h3 {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.text-content.text p {
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+  line-height: 1.5;
+  margin: 10px 0;
+}
+
+.grid-layout .grid-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.grid-layout .grid-text {
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.grid-layout .grid-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.dashboard-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.report-table th {
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+
+.report-table td em {
+  font-style: italic;
+}
+
+.report-table td.right-italic-small {
+  text-align: right;
+  /* font-style: italic; */
+  font-size: 14px; /* Chú thích nhỏ hơn */
+}
+
+.table-editor {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-row {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.table-editor input {
+  flex: 1;
+  min-width: 100px;
+  font-size: 14px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.report-item iframe {
+  width: 100%;
+  height: 300px; /* Giảm kích thước iframe cho phù hợp với báo cáo */
+  border: none;
+  border-radius: 5px;
+}
+
+.report-item .p-4 {
+  display: flex;
+  gap: 10px;
+}
+
+.report-item .w-1/3 input,
+.report-item .w-1/3 select {
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.report-item .w-2/3 input {
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.report-item button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: normal;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.controls button {
+  padding: 8px 16px;
+  font-weight: normal;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: background-color 0.2s;
+}
+
+.controls button:hover {
+  opacity: 0.9;
+}
+
+.loader {
+  border-top-color: #3498db;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ReportBuilder from './ReportBuilder';
 import './App.css';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
   // Define iframe sources for each tab
   const iframeSources = {
     SALE: {
-      src: 'https://app.powerbi.com/reportEmbed?reportId=7255cc0d-6cb5-485f-839d-c007cb42351d&autoAuth=true&ctid=e7572e92-7aee-4713-a3c4-ba64888ad45f',
+      src: 'http://dungpham/Reports/powerbi/InventoryDashboardRS?rs:Embed=true',
       title: 'DoanhThuDashboard',
     },
     INVENTORY: {
@@ -134,14 +135,15 @@ function App() {
         </div>
         <div className="main">
           {iframeSources[activeTab] ? (
-            <iframe
-              title={iframeSources[activeTab].title}
-              width="100%"
-              height="100%"
-              src={iframeSources[activeTab].src}
-              frameBorder="0"
-              allowFullScreen="true"
-            ></iframe>
+            // <iframe
+            //   title={iframeSources[activeTab].title}
+            //   width="100%"
+            //   height="100%"
+            //   src={iframeSources[activeTab].src}
+            //   frameBorder="0"
+            //   allowFullScreen="true"
+            // ></iframe>
+            <ReportBuilder/>
           ) : (
             <p>No content available for this tab.</p>
           )}
