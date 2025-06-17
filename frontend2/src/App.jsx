@@ -135,17 +135,21 @@ function App() {
         </div>
         <div className="main">
           {iframeSources[activeTab] ? (
-            // <iframe
-            //   title={iframeSources[activeTab].title}
-            //   width="100%"
-            //   height="100%"
-            //   src={iframeSources[activeTab].src}
-            //   frameBorder="0"
-            //   allowFullScreen="true"
-            // ></iframe>
-            <ReportBuilder/>
+            activeTab === 'Report' ? (
+              <ReportBuilder />
+            ): (
+                <iframe
+              title={iframeSources[activeTab].title}
+              width="100%"
+              height="100%"
+              src={iframeSources[activeTab].src}
+              frameBorder="0"
+              allowFullScreen="true"
+              >
+            </iframe>
+            )
           ) : (
-            <p>No content available for this tab.</p>
+          <p>No content available for this tab.</p>
           )}
         </div>
       </div>
