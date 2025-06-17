@@ -4,17 +4,14 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-// Middleware CORS để cho phép yêu cầu từ http://localhost:5173
 app.use(cors({
   origin: 'http://localhost:5173',
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
 }));
 
-// Middleware để parse JSON body
 app.use(express.json({ limit: '10mb' }));
 
-// Middleware để phục vụ file tĩnh từ thư mục public
 app.use('/public', express.static('public'));
 
 // API để chụp ảnh dashboard từ URL
@@ -26,26 +23,38 @@ app.post('/api/capture-dashboard', async (req, res) => {
   }
 
   try {
-    // Khởi chạy Puppeteer
     const browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
 
-    // Đặt kích thước viewport
     await page.setViewport({ width: 1280, height: 720 });
 
-    // Mở URL
+    await page.emulateMediaType('print');
+
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
 
-    // Chụp ảnh màn hình
+    await page.evaluate(() => {
+      const selectorsToHide = [
+        '.appBar', 
+        '.slicerContainer',
+        '.visualContainerHeader',
+        '.cardNavigation', 
+        '.paneContainer', 
+      ];
+      selectorsToHide.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+          el.style.display = 'none';
+        });
+      });
+    });
+
     const screenshot = await page.screenshot({ type: 'png', fullPage: false });
 
-    // Đóng browser
     await browser.close();
 
-    // Chuyển ảnh thành base64
     const imageBase64 = screenshot.toString('base64');
 
     // Trả về ảnh base64
@@ -56,7 +65,7 @@ app.post('/api/capture-dashboard', async (req, res) => {
   }
 });
 
-// Endpoint để nhận HTML và tạo PDF
+// API để nhận HTML và tạo PDF
 app.post('/api/save-report', async (req, res) => {
   const { html } = req.body;
 
@@ -65,14 +74,12 @@ app.post('/api/save-report', async (req, res) => {
   }
 
   try {
-    // Khởi chạy Puppeteer
     const browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
 
-    // Đặt nội dung HTML
     await page.setContent(html, { waitUntil: 'networkidle0' });
 
     // Tạo PDF
@@ -87,7 +94,6 @@ app.post('/api/save-report', async (req, res) => {
       },
     });
 
-    // Đóng browser
     await browser.close();
 
     // Gửi PDF về client
